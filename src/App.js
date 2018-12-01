@@ -5,6 +5,24 @@ import './App.css';
 
 
 const Comp=lazy(()=>import('./mycomp/comp'));//lazyloading
+const MyInput1=(props)=>{
+return (<input type="text" ref={props.inputRef}/>)
+}
+const FunctionalComp=()=>{
+  const onClick=()=>{
+      inputRef.focus();
+  }
+  let inputRef=null;
+  return (<div>
+     <div>
+       <span>MyInput</span>
+       
+       <MyInput1 inputRef={(input)=>{inputRef=input}} value="MyInput1"/>
+      <input type="button" value="submit"onClick={onClick} />
+       
+       </div>
+  </div>)
+}
 class App extends Component {
   onClick=()=>{
     alert(`Thanks: ${this.firstname.value}| ${this.lastname.value} submitted!`);
@@ -30,6 +48,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+      <FunctionalComp></FunctionalComp>
       <div>
        <span>FirstName:</span>
        <input type="text" placeholder="FirstName"
@@ -43,7 +62,8 @@ class App extends Component {
        <div>
        <span>Age:</span>
        <input type="text" placeholder="Age" ref={(input)=>{this.age=input}} onKeyUp={this.onKeyUp.bind(this,'age')}/><br/>
-       <input type="button"  value="submit" onClick={this.onClick} onKeyUp={this.onKeyUp.bind(this,'submit')} /><br/>
+       <input type="button"  value="submit" onClick={this.onClick} ref={(input)=>{this.submit=input}}
+       onKeyUp={this.onKeyUp.bind(this,'submit')} /><br/>
        </div>
        <div>My name is madhu.....</div>
        <Suspense fallback={<div>Lazy Loading concept......</div>}>
